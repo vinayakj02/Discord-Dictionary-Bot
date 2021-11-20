@@ -19,21 +19,18 @@ def question(q):
         openai.api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' # Not the actual key 
 
         response = openai.Completion.create(
-        engine="davinci",
-        prompt=f"Q: {q}\nA:",
-        temperature=0,
-        max_tokens=60,
-        top_p=1.0,
-        frequency_penalty=0.0,
-        presence_penalty=0.0,
-        stop=["###"]
-        )
+    engine="davinci",
+    prompt=f"Human: {q} \nAI:",
+    temperature=0.9,
+    max_tokens=150,
+    top_p=1,
+    frequency_penalty=0,
+    presence_penalty=0.6,
+    stop=["\n", " Human:", " AI:"]
+    )
 
-        resp = str(response["choices"])
-        resp = resp.split("\"text\":")[-1].split("\"")[1]
-        if "\\" in resp:
-            return resp.split("\\")[0]
-        return resp
+        return str(response["choices"][0]["text"])
+
     except:
         return "Failed"
 
