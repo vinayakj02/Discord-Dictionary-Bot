@@ -6,19 +6,17 @@ from giphy_client.rest import ApiException
 import requests
 import random
 import openai
-import os
-import sys
 
-giphy_api_key = 'xxxxxxxxxxxxxxxxxxxxxxx' #giphy api key
+giphy_api_key = 'xxxxxxxxxxxxxxxxxxxxxxx' #giphy api key ( Not the actual key )
 
 #dictionary class to parse the json output from API
-gpt3 = bool(sys.argv[1]=="True")
+gpt3 = True #Set this to False if you don't want Q&A . 
 
 def question(q):
     if not gpt3:
         return "Can't answer Q&A s now , try the other functions ! \ntype !help for other commands"
     try:
-        openai.api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        openai.api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' # Not the actual key 
 
         response = openai.Completion.create(
         engine="davinci",
@@ -201,11 +199,15 @@ async def help(message):
         inline=False
     )
     embed.add_field(
-        name = '!ques',
+        name='!ran',
+        value='Generates a random word',
+        inline=False
+    )
+    embed.add_field(
+        name = '!ques <question>',
         value = 'Ask general questions !',
         inline=False
     )
-
     embed.set_image(url=f'https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif')
     # embed.set_image(url = 'https://preview.redd.it/fyuad9psesx21.jpg?width=960&crop=smart&auto=webp&s=d677cbbeaa6df9b6f04503f81e3f4f84ee9e3771')
 
@@ -290,7 +292,6 @@ async def ran(message):
             await message.send(embed = embed)
         except ApiException as e:
             print('Error in gif ')
-    # await message.send(embed=embed)
 
 @client.command()
 async def all(message, arg='nothing'):
@@ -348,7 +349,6 @@ async def all(message, arg='nothing'):
         except ApiException as e:
             print('Error in gif ')
 
-    # await message.channel.send(embed=embed)
 
 @client.command()
 async def define(message,arg='nothing'):
@@ -436,4 +436,4 @@ async def on_ready():
 # async def on_member_remove(member):
 #     print('{member} left the server')
 
-client.run('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+client.run('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx') # Not the actual token 
