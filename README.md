@@ -40,5 +40,11 @@ Doc is a Discord bot with features of a dictionary(and more) that is easy to set
 pip install discord.py giphy_client openai requests
 ```
 
-                            
-
+## Demo 
+*  Use of the all command
+![all command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/all-command.png)
+* Use of the ques command
+![ques command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/ques-command.png)
+![ques command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/ques-command2.png)
+* Use of the define command 
+![define command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/define-command.png)
