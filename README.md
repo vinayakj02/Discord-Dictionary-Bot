@@ -14,7 +14,8 @@ Doc is a Discord bot with features of a dictionary(and more) that is easy to set
 * Invite the bot to the server , using this [link](https://discord.com/api/oauth2/authorize?client_id=910594616502390825&permissions=8&scope=bot).
 * Type `!help` after inviting the Bot for more detailed information about the commands. 
 * **These are the commands** , 
-    * ``!all <word>``    Gives all the information about the word <br>
+    * ``!status <word>`` Status of the bot.
+    * ``!all <word>``    Gives all the information about the word 
     * ``!define <word>`` Gives the definition of the word
     * ``!phonetic <word>``   Phonetic
     * ``!org <word>``    Origin of the word
@@ -23,16 +24,16 @@ Doc is a Discord bot with features of a dictionary(and more) that is easy to set
     * ``!pro <word>`` Gives the pronunciation
     * ``!syn <word>``Synonyms of the word
     * ``!gif <word>`` Gif of the word 
-    * ``!status <word>`` Status of the bot
     * ``!ques <question>``Ask general questions !
     * ``!ran`` Gives all information about a random word 
     * ``!help`` Help command
-    
+
 ## Libraries / API's Used 
 * [Dictionary API](https://dictionaryapi.dev/)
 * [Giphy's API](https://developers.giphy.com/)
 * [OpenAi's API](https://openai.com/) - For Q&A 
 * [discord.py](https://discordpy.readthedocs.io/en/stable/)
+* [Random Word API](https://random-word-api.herokuapp.com)
 
 ## Requirements 
 ```

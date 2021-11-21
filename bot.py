@@ -1,5 +1,4 @@
 import discord
-from discord import embeds
 from discord.ext import commands
 import giphy_client
 from giphy_client.rest import ApiException
@@ -9,9 +8,9 @@ import openai
 
 giphy_api_key = 'xxxxxxxxxxxxxxxxxxxxxxx' #giphy api key ( Not the actual key )
 
-#dictionary class to parse the json output from API
 gpt3 = True #Set this to False if you don't want Q&A . 
 
+# Calls the OpenAI API and gets a response for the given input text
 def question(q):
     if not gpt3:
         return "Can't answer Q&A s now , try the other functions ! \ntype !help for other commands"
@@ -34,6 +33,7 @@ def question(q):
     except:
         return "Failed"
 
+# Calls the random-word-api and gets a random word 
 def getRandomWord():
     try:
         listOfRandomWords =  list(requests.get('https://random-word-api.herokuapp.com/word?number=50&swear=0').json())
@@ -46,7 +46,9 @@ def getRandomWord():
     except:
         return 'spacetime'
 
+#dictionary class to parse the json output from the free dictionary API
 class dictionary:
+    # Constructor containing the word to be searched
     def __init__(self,word):
         try:
             self.jsonText = requests.get(f'https://api.dictionaryapi.dev/api/v2/entries/en/{word}').json()
@@ -57,31 +59,35 @@ class dictionary:
             self.jsonText = None
             print('Not Found')
 
+    # Returns the phonetic spelling of the word
     def getPhonetic(self):
         try :
             return self.jsonText[0]['phonetic']
         except:
             return 'Word Not Found'
 
+    # Returns the word's origin
     def getOrigin(self):
         try:
             return self.jsonText[0]['origin']
         except:
             return 'Could not find origin \U0001F914'
 
+    # Returns the word's definition 
     def getDefinition(self):
         try:
             return self.jsonText[0]['meanings'][self.wordNum]['definitions'][0]['definition']
         except:
             return 'Word Not Found \U0001F914'
 
-
+    # Returns the word's part of Speech
     def getPartofSpeech(self):
         try:
             return self.jsonText[0]['meanings'][self.wordNum]['partOfSpeech']
         except:
             return 'Word Not Found \U0001F914'
 
+    # Returns the word's Synonyms 
     def getSynonyms(self):
         try :
             synoyms = self.jsonText[0]['meanings'][self.wordNum]['definitions'][0]['synonyms']
@@ -89,6 +95,7 @@ class dictionary:
         except:
             return 'Could not find any synonyms \U0001F914'
 
+    # Returns Examples of the word
     def getExample(self):
         try :
             return self.jsonText[0]['meanings'][self.wordNum]['definitions'][0]['example']
@@ -96,9 +103,13 @@ class dictionary:
             return 'Could not find any examples \U0001F914'
 
 
+# setting the bot's prefix to ! 
 client = commands.Bot(command_prefix='!')
+
+# removing the default help command ( because I've made a custom one )
 client.remove_command('help')
 
+# Tells us if the Q&A is enabled or not
 @client.command()
 async def statusGPT3(message):
     if gpt3:
@@ -108,13 +119,13 @@ async def statusGPT3(message):
     await message.channel.send(embed = embed)
 
 
+# Calls the Question() function and returns the response
 @client.command()
 async def ques(message,*args):
     try:
         s = ""
         for e in args:
             s += e + " "
-        print(s)
         ans = question(s)
         embed = discord.Embed(title = s,
         description = ans)
@@ -123,12 +134,14 @@ async def ques(message,*args):
         print('Failed ques()')
         await message.channel.send("Try again")
 
+# Returns a gif of the word passed in (default = Type) using the Giphy API
 @client.command()
 async def gif(message,*,arg='Type'):
     api_instance = giphy_client.DefaultApi()
 
     try:
         api_response = api_instance.gifs_search_get(giphy_api_key, arg,limit = 5, rating = 'g')
+        # getting a random gif from the response 
         listOfGifs = list(api_response.data)
         gif = random.choice(listOfGifs)
 
@@ -137,6 +150,7 @@ async def gif(message,*,arg='Type'):
         print('Error in gif ')
 
 
+# Custom !help command
 @client.command()
 async def help(message):
 
@@ -177,7 +191,7 @@ async def help(message):
     )
     embed.add_field(
         name='!pro <word>',
-        value='Gives the pronounciation',
+        value='Gives the pronunciation',
         inline=False
     )
     embed.add_field(
@@ -211,12 +225,13 @@ async def help(message):
     await message.channel.send(embed=embed)
 
 
+# Returns the info the guild and author 
 @client.command()
 async def info(message):
     await message.channel.send(message.guild)
     await message.channel.send(message.author)
-    await message.channel.send(message.message.id)
 
+# Returns "Online" and a gif if the bot is online on '!status' command 
 @client.command()
 async def status(message):
     api_instance = giphy_client.DefaultApi()
@@ -233,6 +248,7 @@ async def status(message):
     except ApiException as e:
         print('Error in gif ')
 
+# Returns all the information about a random word by calling the getRandomWord() function on '!ran <word>' command
 @client.command()
 async def ran(message):
     arg = getRandomWord()
@@ -290,6 +306,7 @@ async def ran(message):
         except ApiException as e:
             print('Error in gif ')
 
+# Returns all the definitions of the word (default = "nothing") on '!all <word>' command
 @client.command()
 async def all(message, arg='nothing'):
     word = dictionary(arg)
@@ -347,11 +364,10 @@ async def all(message, arg='nothing'):
             print('Error in gif ')
 
 
+# Returns the definition of the word (default = "nothing") on '!def <word>' command 
 @client.command()
 async def define(message,arg='nothing'):
-    """
-    !define word
-    """
+    
     word = dictionary(arg)
     embed = discord.Embed(
         title = f'{arg}',
@@ -360,6 +376,7 @@ async def define(message,arg='nothing'):
 
     await message.channel.send(embed=embed)
 
+# Returns the part of speech of the word (default = "nothing") on '!pos <word>' command . 
 @client.command()
 async def pos(message,arg='nothing'):
     word = dictionary(arg)
@@ -370,6 +387,8 @@ async def pos(message,arg='nothing'):
 
     await message.channel.send(embed=embed)
 
+
+# Gives an example of the word (default = "nothing") on '!example <word>' command
 @client.command()
 async def example(message,arg='nothing'):
     word = dictionary(arg)
@@ -381,6 +400,7 @@ async def example(message,arg='nothing'):
 
     await message.channel.send(embed=embed)
 
+# Gives the phonetic of the word (default = "nothing") on '!phonetic <word>' command
 @client.command()
 async def phonetic(message,arg='nothing'):
     word = dictionary(arg)
@@ -392,6 +412,7 @@ async def phonetic(message,arg='nothing'):
 
     await message.channel.send(embed=embed)
 
+# Gvies the synonyms of the word (default = "nothing") on '!synonyms <word>' command
 @client.command()
 async def syn(message,arg='nothing'):
     word = dictionary(arg)
@@ -403,6 +424,7 @@ async def syn(message,arg='nothing'):
 
     await message.channel.send(embed=embed)
 
+# Gives the origin of the word (default = "nothing") on '!origin <word>' command
 @client.command()
 async def org(message,arg='nothing'):
     word = dictionary(arg)
@@ -414,23 +436,16 @@ async def org(message,arg='nothing'):
 
     await message.channel.send(embed=embed)
 
+# Gives the pronunciation the word on '!pron <word>' command
 @client.command()
 async def pro(message,arg):
 
     await message.channel.send(arg,tts=True)
 
-
+# To check if bot is running in terminal 
 @client.event
 async def on_ready():
     print('Bot is Running.')
 
-# @client.event
-# async def on_member_join(member):
-#     print(f'{member} joined the server')
-
-
-# @client.event
-# async def on_member_remove(member):
-#     print('{member} left the server')
-
+# To run the bot
 client.run('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx') # Not the actual token 
