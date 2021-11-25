@@ -91,13 +91,20 @@ class dictionary:
     def getSynonyms(self):
         try : 
             synoyms = self.jsonText[0]['meanings'][self.wordNum]['definitions'][0]['synonyms']
-            return f'{" , ".join(synoyms)}'
+            if len(synoyms)==0:
+              return 'Could not find any synonyms \U0001F914'
+            if len(synoyms)<6:
+              return " , ".join(synoyms)
+            return f'{" , ".join(synoyms[:6])}'
         except:
             return 'Could not find any synonyms \U0001F914'
+    
     # Returns the word's Antonyms
     def getAntonyms(self):
         try : 
             antonyms = self.jsonText[0]['meanings'][self.wordNum]['definitions'][0]['antonyms']
+            if len(antonyms)==0:
+              return 'Could not find any antonyms \U0001F914'
             return f'{" , ".join(antonyms)}'
         except:
             return 'Could not find any antonyms \U0001F914'
