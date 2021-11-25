@@ -3,12 +3,14 @@ Doc is a Discord bot with features of a dictionary(and more) that is easy to set
 
 ## Features
 * Get the definition of the any word in the english dictionary. 
-* Get other details about the word like synonyms , examples , phonetics and part of speech.
+* Get other details about the word like phonetics and part of speech.
+* Get examples in which the word is used.
+* Get synonyms and antonyms.
 * Get the closest gif of the word .  
 * Get to know about the origin of the word. 
 * Get the pronunciation to the word.
 * Bot can also generate random words. 
-* The bot also support general Q&A .
+* Ask the bot any question ! 
 
 ## How to use 
 * Invite the bot to the server , using this [link](https://discord.com/api/oauth2/authorize?client_id=910594616502390825&permissions=8&scope=bot).
@@ -23,6 +25,7 @@ Doc is a Discord bot with features of a dictionary(and more) that is easy to set
     * ``!pos <word>`` Part of Speech
     * ``!pro <word>`` Gives the pronunciation
     * ``!syn <word>``Synonyms of the word
+    * ``!ant <word>``Antonyms of the word
     * ``!gif <word>`` Gif of the word 
     * ``!ques <question>``Ask general questions !
     * ``!ran`` Gives all information about a random word 
@@ -41,10 +44,10 @@ pip install discord.py giphy_client openai requests
 ```
 
 ## Demo 
-*  Use of the all command
-![all command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/all-command.png)
-* Use of the ques command
+#### Use of the all command
+   ![all command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/all-command.png)
+#### Use of the ques command
 ![ques command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/ques-command.png)
 ![ques command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/ques-command2.png)
-* Use of the define command 
+#### Use of the define command 
 ![define command](https://github.com/vinayakj02/Discord-Dictionary-Bot/blob/main/imgs/define-command.png)
