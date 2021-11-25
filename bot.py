@@ -263,65 +263,55 @@ async def status(message):
 # Returns all the information about a random word by calling the getRandomWord() function on '!ran <word>' command
 @client.command()
 async def ran(message):
-    arg = getRandomWord()
-    word = dictionary(arg)
+    arg2 = getRandomWord()
+    
+    wordR = dictionary(arg2)
 
-    embed = discord.Embed(
-        title = f'{arg}',
-        description=f'{word.getDefinition()}'
-    )
+    embed = discord.Embed(title = arg2,
+    description = wordR.getDefinition())
+
     embed.add_field(
         name='Phonetic',
-        value=word.getPhonetic(),
+        value=wordR.getPhonetic(),
         inline=False
     )
     embed.add_field(
         name='Origin',
-        value=word.getOrigin(),
+        value=wordR.getOrigin(),
         inline=False
     )
     embed.add_field(
-        name='Part Of Speech',
-        value=word.getPartofSpeech(),
+        name='Synonyms',
+        value=wordR.getSynonyms(),
         inline=False
     )
     embed.add_field(
-        name = 'Synonyms',
-        value=word.getSynonyms(),
-        inline= False
-    )
-    embed.add_field(
-        name = 'Antonyms',
-        value=word.getAntonyms(),
-        inline= False
+        name='Antonyms',
+        value=wordR.getAntonyms(),
+        inline=False
     )
     embed.add_field(
         name='Example',
-        value=word.getExample(),
+        value=wordR.getExample(),
+        inline=False
+    )
+    embed.add_field(
+        name='Part of Speech',
+        value=wordR.getPartofSpeech(),
         inline=False
     )
     api_instance = giphy_client.DefaultApi()
-    desc = word.getDefinition()
-    if ',' in desc:
-        try:
-            api_response = api_instance.gifs_search_get(giphy_api_key,desc.split(',')[0],limit = 5, rating = 'g')
-            listOfGifs = list(api_response.data)
-            gif = random.choice(listOfGifs)
 
-            embed.set_image(url=f'https://media.giphy.com/media/{gif.id}/giphy.gif')
-            await message.send(embed = embed)
-        except ApiException as e:
-            print('Error in gif ')
-    else:
-        try:
-            api_response = api_instance.gifs_search_get(giphy_api_key,arg,limit = 5, rating = 'g')
-            listOfGifs = list(api_response.data)
-            gif = random.choice(listOfGifs)
+    try:
+        api_response = api_instance.gifs_search_get(giphy_api_key,arg2,limit = 5, rating = 'g')
+        listOfGifs = list(api_response.data)
+        gif = random.choice(listOfGifs)
+        embed.set_image(url=f'https://media.giphy.com/media/{gif.id}/giphy.gif')
 
-            embed.set_image(url=f'https://media.giphy.com/media/{gif.id}/giphy.gif')
-            await message.send(embed = embed)
-        except ApiException as e:
-            print('Error in gif ')
+    except ApiException as e:
+        print('Error in gif ')
+    
+    await message.channel.send(embed = embed)
 
 # Returns all the definitions of the word (default = "nothing") on '!all <word>' command
 @client.command()
