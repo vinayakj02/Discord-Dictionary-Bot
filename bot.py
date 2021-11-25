@@ -89,11 +89,18 @@ class dictionary:
 
     # Returns the word's Synonyms 
     def getSynonyms(self):
-        try :
+        try : 
             synoyms = self.jsonText[0]['meanings'][self.wordNum]['definitions'][0]['synonyms']
-            return f'{synoyms[0]} or {synoyms[1]}'
+            return f'{" , ".join(synoyms)}'
         except:
             return 'Could not find any synonyms \U0001F914'
+    # Returns the word's Antonyms
+    def getAntonyms(self):
+        try : 
+            antonyms = self.jsonText[0]['meanings'][self.wordNum]['definitions'][0]['antonyms']
+            return f'{" , ".join(antonyms)}'
+        except:
+            return 'Could not find any antonyms \U0001F914'
 
     # Returns Examples of the word
     def getExample(self):
@@ -200,6 +207,11 @@ async def help(message):
         inline=False
     )
     embed.add_field(
+        name='!ant <word>',
+        value='Antonyms of the word',
+        inline=False
+    )
+    embed.add_field(
         name='!gif <word>',
         value='Gif',
         inline=False
@@ -279,6 +291,11 @@ async def ran(message):
         inline= False
     )
     embed.add_field(
+        name = 'Antonyms',
+        value=word.getAntonyms(),
+        inline= False
+    )
+    embed.add_field(
         name='Example',
         value=word.getExample(),
         inline=False
@@ -333,6 +350,11 @@ async def all(message, arg='nothing'):
     embed.add_field(
         name = 'Synonyms',
         value=word.getSynonyms(),
+        inline= False
+    )
+    embed.add_field(
+        name = 'Antonyms',
+        value=word.getAntonyms(),
         inline= False
     )
     embed.add_field(
@@ -424,6 +446,17 @@ async def syn(message,arg='nothing'):
 
     await message.channel.send(embed=embed)
 
+# Gives the antonyms of the word (default = "nothing") on '!ant <word>' command
+@client.command()
+async def ant(message,arg='nothing'):
+    word = dictionary(arg)
+
+    embed = discord.Embed(
+        title = f'{arg}',
+        description = word.getAntonyms()
+    )
+
+    await message.channel.send(embed=embed)    
 # Gives the origin of the word (default = "nothing") on '!origin <word>' command
 @client.command()
 async def org(message,arg='nothing'):
@@ -436,7 +469,7 @@ async def org(message,arg='nothing'):
 
     await message.channel.send(embed=embed)
 
-# Gives the pronunciation the word on '!pron <word>' command
+# Gives the pronunciation the word on '!pro <word>' command
 @client.command()
 async def pro(message,arg):
 
