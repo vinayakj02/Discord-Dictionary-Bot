@@ -1,3 +1,5 @@
+## Task ID: Discord Dictionary Bot
+
 # Discord Dictionary Bot - doc 
 Doc is a Discord bot with features of a dictionary(and more) that is easy to set up and use !
 
