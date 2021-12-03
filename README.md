@@ -3,6 +3,8 @@
 # Discord Dictionary Bot - doc 
 Doc is a Discord bot with features of a dictionary(and more) that is easy to set up and use !
 
+[Demo Video link](https://drive.google.com/file/d/1k4plbNH9W8UCoLTDtloabOSAxx0MQHl1/view?usp=sharing)
+
 ## Features
 * Get the definition of the any word in the english dictionary. 
 * Get other details about the word like phonetics and part of speech.
@@ -29,7 +31,7 @@ Doc is a Discord bot with features of a dictionary(and more) that is easy to set
     * ``!syn <word>``Synonyms of the word
     * ``!ant <word>``Antonyms of the word
     * ``!gif <word>`` Gif of the word 
-    * ``!ques <question>``Ask general questions !
+    * ``!ques <question>`` Answers general questions (may not be factually right)!
     * ``!ran`` Gives all information about a random word 
     * ``!help`` Help command
 
